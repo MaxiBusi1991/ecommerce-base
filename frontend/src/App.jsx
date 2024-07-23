@@ -3,12 +3,18 @@ import HomeScreen from "./screens/HomeScreen"
 import ProductScreen from "./screens/ProductScreen"
 import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
+import Nav from 'react-bootstrap/Nav'
+import Badge from 'react-bootstrap/Badge'
 import { LinkContainer } from 'react-router-bootstrap'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+//import Badge from 'react-bootstrap/esm/Badge'
+import { useContext } from 'react'
+import { Store } from './Store'
 
 function App() {
-
+  const { state } = useContext(Store);
+  const { cart } = state;
   return (
     <>
     <BrowserRouter>
@@ -19,6 +25,15 @@ function App() {
               <LinkContainer to='/'>
                 <Navbar.Brand>amazona</Navbar.Brand>
               </LinkContainer>
+              <Nav className='me-auto text-white mt-1'>
+                <Link to='/cart' className='nav-link' />
+                Cart
+                {cart.cartItems.length > 0 && (
+                  <Badge pill bg='danger' className='ms-2 px-2 py-1'>
+                    {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                  </Badge>
+                )}
+              </Nav>
             </Container>
           </Navbar>
         </header>

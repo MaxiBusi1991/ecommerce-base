@@ -9,16 +9,19 @@ app.get('/api/products', (req, res) => {
 });
 
 app.get('/api/products/slug/:slug', (req, res) => {
-  // const product = data.products.find((x) => x.slug === req.params.slug)
-  // if(product) {
-  //   res.send(product)
-  // } else {
-  //   res.status(404).json({message: 'Product not found'})
-  // }
-  try {
-    const product = data.products.find((x) => x.slug === req.params.slug)
+  const product = data.products.find((x) => x.slug === req.params.slug)
+  if(product) {
     res.send(product)
-  } catch (error) {
+  } else {
+    res.status(404).json({message: 'Product not found'})
+  }
+});
+
+app.get('/api/products/:id', (req, res) => {
+  const product = data.products.find((x) => x._id === req.params.id)
+  if(product) {
+    res.send(product)
+  } else {
     res.status(404).json({message: 'Product not found'})
   }
 });
